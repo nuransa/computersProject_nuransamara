@@ -80,20 +80,20 @@ def find_chi2(y,a,b,x,dy):
         Chi2=Chi2+((y[i]-(a*x[i]+b))/(dy[i]))**2
     return Chi2
     
-    def data_with_rows (data):
+def data_with_rows (data):
     for i in data[0:len(data)-2]:
-        mycheked_list = item.strip("\n").lower().split()
+        mycheked_list = i.strip("\n").lower().split()
         a = mycheked_list[0]
         if a =="x":
             x= list(map(float,mycheked_list[1:]))
-        elif a== "Y":
+        elif a== "y":
             Y= list(map(float,mycheked_list[1:]))
-        elif a =="Dx":
+        elif a =="dx":
             Dx = list (map(float,mycheked_list[1:]))
-        elif a = "dY":
+        elif a = "dy":
             dY = list(map(float,mycheked_list[1:]))
-    if len(x) != len(Y) or len(x) != len(dY) or len(x) != len(Dx):
-        print("“Input file error: Data lists are not the same length")
+    if len(x) != len(Y) and len(x) != len(dY) and len(x) != len(Dx) and len(Y) != len(Dx) and len(Y) != len(dY) and len(dY) != len(Dx):
+        print("Input file error: Data lists are not the same length")
         exit()
     for i in Dx:
          if i <=0:
@@ -113,25 +113,24 @@ def data_with_column(data):
     column= len(mycheked_list[0])
     r= len(mycheked_list)
     my_data=[]
-    try:
-        for k in range (column):
-            newlist=[]
-            for i in range (r):
-                newlist.append(mycheked_list[i][k])
-            my_data.append(newlist)
-    except:
-        print("not the same length.")
-        exit()
+    for k in range (column):
+        newlist=[]
+        for i in range (r):
+            newlist.append(mycheked_list[i][k])
+        my_data.append(newlist)
     for c in my_data :
         b= c[0]
         if b == "x":
-             x = list(map(float, a[1:]))
-        elif b == "Y":
-             Y = list(map(float, a[1:]))
-        elif b == "Dx":
-             Dx = list(map(float, a[1:]))
-        elif b = "dY":
-             dY = list(map(float, a[1:]))
+             x = list(map(float, c[1:]))
+        elif b == "y":
+             Y = list(map(float, c[1:]))
+        elif b == "dx":
+             Dx = list(map(float, c[1:]))
+        elif b = "dy":
+             dY = list(map(float, c[1:]))
+    if len(x) != len(Y) and len(x) != len(dY) and len(x) != len(Dx) and len(Y) != len(Dx) and len(Y) != len(dY) and len(dY) != len(Dx):
+        print("Input file error: Data lists are not the same length")
+        exit()
     for c2 in Dx:
          if c2 <=0:
             print ("Input file error: Not all uncertainties are positive.")
