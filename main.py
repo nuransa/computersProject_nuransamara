@@ -81,29 +81,34 @@ def find_chi2(y,a,b,x,dy):
     return Chi2
     
 def data_with_rows (data):
-    for i in data[0:len(data)-2]:
-        mycheked_list = i.strip("\n").lower().split()
-        a = mycheked_list[0]
-        if a =="x":
-            x= list(map(float,mycheked_list[1:]))
-        elif a== "y":
-            Y= list(map(float,mycheked_list[1:]))
-        elif a =="dx":
-            Dx = list (map(float,mycheked_list[1:]))
-        elif a == "dy":
-            dY = list(map(float,mycheked_list[1:]))
-    if len(x) != len(Y) and len(x) != len(dY) and len(x) != len(Dx) and len(Y) != len(Dx) and len(Y) != len(dY) and len(dY) != len(Dx):
-        print("Input file error: Data lists are not the same length")
-        exit()
-    for i in Dx:
-         if i <=0:
-            print ("Input file error: Not all uncertainties are positive.")
-            exit()
-    for i in dY:
-         if i <=0:
-            print ("Input file error: Not all uncertainties are positive.")
-            exit()
-    return (x,Y,Dx,dY)
+	new_data = data.split('\n')
+	for x in new_data:
+		line_data_list = x.split(" ")
+		a = line_data_list[0].lower()
+		line_data_list.pop(0)
+		if a =="x":
+			x_data = map(float,line_data_list)
+
+		elif a== "y":
+			y_data = map(float,line_data_list)
+		elif a =="dx":
+			dx_data = map(float,line_data_list)
+		elif a == "dy":
+			dy_data = map(float,line_data_list)
+
+
+	if len(x_data) != len(y_data) and len(x_data) != len(dy_data) and len(x_data) != len(dx_data) and len(y_data) != len(dx_data) and len(y_data) != len(dy_data) and len(dy_data) != len(dx_data):
+		print("Input file error: Data lists are not the same length")
+		exit()
+	for i in dx_data:
+		if i <=0:
+			print ("Input file error: Not all uncertainties are positive.")
+			exit()
+	for i in dy_data:
+		if i <=0:
+			print ("Input file error: Not all uncertainties are positive.")
+			exit()
+	return (x_data,y_data,dx_data,dy_data)
 
 def data_with_column(data):
     mycheked_list=[]
@@ -146,7 +151,7 @@ import numpy as np
 
 def fit_linear(filename):
     my_file = open(filename)
-    data = my_file.readline()
+    data = my_file.read()
     my_list = ['x', 'Y', 'Dx', 'dY']
     count = 0
     for i in my_list:
@@ -198,8 +203,8 @@ def fit_linear(filename):
        y = d
        plt.errorbar(my_x, my_y, yerr=my_y_errey, xerr=my_x_errey, fmt='none', ecolor='b')
        plt.plot(my_x, y, "r")
-       plt.xlabel(xlabel=x_lable)
-       plt.ylabel(ylabel=y_lable)
+       plt.xlabel(x_lable)
+       plt.ylabel(y_lable)
        plt.show()
        plt.savefig("linear_fit.svg")
        my_file.close()
