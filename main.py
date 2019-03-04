@@ -90,7 +90,7 @@ def data_with_rows (data):
             Y= list(map(float,mycheked_list[1:]))
         elif a =="dx":
             Dx = list (map(float,mycheked_list[1:]))
-        elif a = "dy":
+        elif a == "dy":
             dY = list(map(float,mycheked_list[1:]))
     if len(x) != len(Y) and len(x) != len(dY) and len(x) != len(Dx) and len(Y) != len(Dx) and len(Y) != len(dY) and len(dY) != len(Dx):
         print("Input file error: Data lists are not the same length")
@@ -126,7 +126,7 @@ def data_with_column(data):
              Y = list(map(float, c[1:]))
         elif b == "dx":
              Dx = list(map(float, c[1:]))
-        elif b = "dy":
+        elif b == "dy":
              dY = list(map(float, c[1:]))
     if len(x) != len(Y) and len(x) != len(dY) and len(x) != len(Dx) and len(Y) != len(Dx) and len(Y) != len(dY) and len(dY) != len(Dx):
         print("Input file error: Data lists are not the same length")
@@ -141,7 +141,7 @@ def data_with_column(data):
             exit()
     return (x,Y,Dx,dY)
 
-import matplotlip.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
 
 def fit_linear(filename):
