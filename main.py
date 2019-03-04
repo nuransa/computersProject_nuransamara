@@ -81,8 +81,7 @@ def find_chi2(y,a,b,x,dy):
     return Chi2
     
 def data_with_rows (data):
-	new_data = data.split('\n')
-	for x in new_data:
+	for x in data:
 		line_data_list = x.split(" ")
 		a = line_data_list[0].lower()
 		line_data_list.pop(0)
@@ -112,7 +111,8 @@ def data_with_rows (data):
 
 def data_with_column(data):
     mycheked_list=[]
-    for i in data [:len(data)-2]:
+
+    for i in data [:len(data)-1]:
         a = i.strip('\n').lower().split()
         mycheked_list.append(a)
     column= len(mycheked_list[0])
@@ -152,15 +152,15 @@ import numpy as np
 def fit_linear(filename):
     my_file = open(filename)
     data = my_file.read()
-    my_list = ['x', 'Y', 'Dx', 'dY']
-    count = 0
-    for i in my_list:
-        if i in data[0]:
-            count = count + 1
+    data = data.split("\n")
+    
+    data_header = data[0]
+    data_header_list = data_header.split(" ")
+    count = len(data_header_list)
     if count == 4:
-       x,Y,Dx,dY =data_with_column(data)
-       y_lable = data[len(data) - 1].strip("Y title")
-       x_lable = data[len(data) - 1].strip("x title")
+       x,Y,Dx,dY = data_with_column(data)
+       y_lable = data_header_list[0]
+       x_lable = data_header_list[2]
        a = find_a(x, Y, dY)
        b = find_b(Y, a, x, dY)
        chi = find_chi2(Y, a, b, x, dY)
@@ -177,16 +177,16 @@ def fit_linear(filename):
        y = d
        plt.errorbar(my_x, my_y, yerr=my_y_errey, xerr=my_x_errey, fmt='none', ecolor='b')
        plt.plot(my_x, y, "r")
-       plt.xlabel(xlabel=x_lable)
-       plt.ylabel(ylabel=y_lable)
+       plt.xlabel(x_lable)
+       plt.ylabel(y_lable)
        plt.show()
        plt.savefig("linear_fit.svg")
        my_file.close()
 
     else:
        x,Y,Dx,dY=data_with_rows(data)
-       y_lable = data[len(data) - 1].strip("Y title")
-       x_lable = data[len(data) - 1].strip("x title")
+       y_lable = data[0].split(" ")[0]
+       x_lable = data[2].split(" ")[0]
        a = find_a(x, Y, dY)
        b = find_b(Y, a, x, dY)
        chi = find_chi2(Y, a, b, x, dY)
