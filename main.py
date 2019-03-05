@@ -108,28 +108,28 @@ def data_with_rows(data):
             a = line_data_list[0].lower()
             line_data_list.pop(0)
             if a == 'x':
-                x_data = map(float, line_data_list)
+                x_data = list(map(float, line_data_list))
             elif a == 'y':
 
-                y_data = map(float, line_data_list)
+                y_data = list(map(float, line_data_list))
             elif a == 'dx':
-                dx_data = map(float, line_data_list)
+                dx_data = list(map(float, line_data_list))
             elif a == 'dy':
-                dy_data = map(float, line_data_list)
+                dy_data = list(map(float, line_data_list))
 
     if len(x_data) != len(y_data) and len(x_data) != len(dy_data) \
         and len(x_data) != len(dx_data) and len(y_data) != len(dx_data) \
         and len(y_data) != len(dy_data) and len(dy_data) \
         != len(dx_data):
-        print 'Input file error: Data lists are not the same length'
+        print ('Input file error: Data lists are not the same length')
         exit()
     for i in dx_data:
         if i <= 0:
-            print 'Input file error: Not all uncertainties are positive.'
+            print ('Input file error: Not all uncertainties are positive.')
             exit()
     for i in dy_data:
         if i <= 0:
-            print 'Input file error: Not all uncertainties are positive.'
+            print ('Input file error: Not all uncertainties are positive.')
             exit()
     return (x_data, y_data, dx_data, dy_data)
 
@@ -164,17 +164,17 @@ def data_with_column(data):
             dY = list(map(float, c[1:]))
 
     if len(x) != len(Y) and len(x) != len(dY) or len(x) != len(Dx) and len(Y) != len(Dx) or len(Y) != len(dY) and len(dY) != len(Dx):
-        print 'Input file error: Data lists are not the same length'
+        print ('Input file error: Data lists are not the same length')
         exit()
     for c2 in Dx:
         if c2 <= 0:
-            print 'Input file error: Not all uncertainties are positive.'
+            print ('Input file error: Not all uncertainties are positive.')
             exit()
     for c2 in dY:
         if c2 <= 0:
-            print 'Input file error: Not all uncertainties are positive.'
+            print ('Input file error: Not all uncertainties are positive.')
             exit()
-    print x
+    print (x)
     return (x, Y, Dx, dY)
 
 
