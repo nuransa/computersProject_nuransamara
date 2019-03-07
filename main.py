@@ -174,7 +174,7 @@ def data_with_column(data):
         if c2 <= 0:
             print ('Input file error: Not all uncertainties are positive.')
             exit()
-    print (x)
+    
     return (x, Y, Dx, dY)
 
 
